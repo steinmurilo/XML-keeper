@@ -9,12 +9,16 @@ import com.steinmurilo.xmlKeeper.repository.XMLFIleRepository;
 import com.steinmurilo.xmlKeeper.repository.XMLFieldsRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.parser.Entity;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,15 +39,15 @@ public class XMLService {
     }
 
     @Transactional
-    public ResponseEntity<String> processXml(String xmlContent) throws JsonProcessingException {
+    public ResponseEntity<String> processXml(List<String> xmlContents) throws JsonProcessingException {
 
         try{
-
-            XMLFileEntity savedFile = saveFile(xmlContent);
-            saveFields(xmlContent, savedFile);
+            for(String xmlContent : xmlContents) {
+                XMLFileEntity savedFile = saveFile(xmlContent);
+                saveFields(xmlContent, savedFile);
+            }
 
             return new ResponseEntity<>("Success on save file", HttpStatus.OK);
-
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -83,6 +87,10 @@ public class XMLService {
 
         xmlFieldsEntity = xmlFieldsRepository.save(xmlFieldsEntity);
         return xmlFieldsEntity;
+    }
+
+    public Page<XMLFieldsEntity> findAllPaginated(PageRequest pageRequest) {
+        return xmlFieldsRepository.findAll(pageRequest);
     }
 
 
