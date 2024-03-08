@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import api from '../../services/api'
 
-import { TableItem } from '../../models/item';
+import { TableItem, TablePaginationInfo } from '../../models/item';
 
 import Header from '../../components/Header';
 import Upload from '../../components/Upload';
@@ -11,15 +11,22 @@ import { Container } from "./styles";
 
 export default function Home() {
     const [data, setData] = useState<TableItem[]>([]);
+    const [paginationInfo, setPaginationInfo] = useState<TablePaginationInfo>();
 
     useEffect(() => {
         fetchData();
     }, []);
 
-    const fetchData = async() => {
+    const fetchData = async(pageSelected: number | void) => {
         try{
-            const response = await api.get('/list');
+            const response = await api.get(`/list?page=${pageSelected? pageSelected : 0}`);
             setData(response.data.content);
+            setPaginationInfo({
+                first: response.data.first, 
+                last: response.data.last,
+                pageNumber: response.data.pageable.pageNumber,
+                totalPage: response.data.totalPages,
+            })
         } catch (error) {
             console.error(error);
         }
@@ -64,7 +71,7 @@ export default function Home() {
         <Container>
             <Header />
             <Upload onUploadItems={handleUploadXML} />
-            <ItemList list={data} onDownloadItem={handleDownloadXML} />
+            <ItemList list={data} pagination={paginationInfo} onDownloadItem={handleDownloadXML} onChangePagination={fetchData} />
         </Container>
     )
 }

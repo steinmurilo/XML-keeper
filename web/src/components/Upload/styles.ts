@@ -5,10 +5,12 @@ export const FileUploadContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+
+    margin: 2rem 0;
 `
 
 export const DropzoneContainer = styled.div`
-    border: 2px dashed #cccccc;
+    border: 2px dashed ${(props) => props.theme['gray-100']};
     border-radius: 5px;
     text-align: center;
     cursor: pointer;
@@ -27,14 +29,14 @@ export const FileResumeContainer = styled.div`
     width: 15rem;
 
     scrollbar-width: thin;
-    scrollbar-color: #cccccc #ecf0f1;
+    scrollbar-color: ${(props) => props.theme['blue-title']} ${(props) => props.theme['gray-100']};
 
     ::-webkit-scrollbar {
     width: 12px;
     }
 
     ::-webkit-scrollbar-thumb {
-        background-color: #cccccc;
+        background-color: ${(props) => props.theme['blue-title']};
         border-radius: 6px;
     }
 `
@@ -45,13 +47,47 @@ export const FileDescription = styled.div`
     align-items: center;
 `
 
+export const RemoveFile = styled.span`
+    font-size: 12px;
+    margin-left: 1rem;
+    font-weight: 800;
+    color: ${(props) => props.theme['gray-500']};
+    cursor: pointer;
+
+    &:hover {
+        color: red;
+    }
+`
+
 export const ButtonUpload = styled.button`
     margin-left: 1rem;  
     padding: 0.5rem 0; 
     border-radius: 10px; 
-    display: flex; 
+    border: none;
     width: 10rem; 
+
+    display: flex; 
     justify-content: center; 
     align-items: center; 
+
     cursor: pointer;
+
+    font-weight: 700;
+    color: ${(props) => props.theme['black']};
+    background: ${(props) => props.theme['green-button']};
+
+    &:hover {
+        color: ${(props) => props.theme['white']};
+        background: ${(props) => props.theme['green-hover']};
+    }
+
+    &:disabled {
+        color: ${(props) => props.theme['gray-300']};
+        background: ${(props) => props.theme['green-disabled']};
+        cursor: not-allowed;
+    }
+
+    span {
+        margin-right: 0.5rem
+    }
 `

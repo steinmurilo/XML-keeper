@@ -13,3 +13,10 @@ export interface TableItem {
     vtotTrib: number, 
     vnf: number
 }
+
+export interface TablePaginationInfo {
+    first: boolean,
+    last: boolean,
+    pageNumber: number,
+    totalPage: number,
+}

@@ -1,6 +1,11 @@
+import { HeadContainer } from "./styles";
 
 
 export default function Header() {
 
-    return <div>XML KEEPER</div>
+    return (
+        <HeadContainer>
+            <span>XML KEEPER</span>
+        </HeadContainer>
+    )
 }

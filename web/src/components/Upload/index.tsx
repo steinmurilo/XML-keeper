@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FileText, CloudArrowUp } from '@phosphor-icons/react'
 
-import { DropzoneContainer, FileUploadContainer, FileResumeContainer, ButtonUpload, FileDescription } from "./styles";
+import { DropzoneContainer, FileUploadContainer, FileResumeContainer, ButtonUpload, FileDescription, RemoveFile } from "./styles";
 
 type UploadProps = {
     onUploadItems: (files: File[]) => void
@@ -27,9 +27,16 @@ export default function Upload(props: UploadProps) {
     const renderFileSelected = () => {
         return fileList.map((file : File, index: number) => (
             <FileDescription key={`${index}-${file.name}`}>
-                <FileText size={24} /> {file.name}
+                <FileText size={24} /> 
+                {file.name}
+                <RemoveFile onClick={() => removeFile(file)}>X</RemoveFile>
             </FileDescription>
         ))
+    }
+
+    const removeFile = (file: File) => {
+        const filteredList = fileList.filter(element => element !== file)
+        setFileList(filteredList);
     }
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, multiple: true });
@@ -56,7 +63,8 @@ export default function Upload(props: UploadProps) {
                         setFileList([]);
                     }}
                     >
-                    <CloudArrowUp  size={24}/> Send File
+                    <span>Upload</span>
+                    <CloudArrowUp  size={24}/> 
                 </ButtonUpload>
             </FileUploadContainer>
     )

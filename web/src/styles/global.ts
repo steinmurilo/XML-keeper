@@ -8,12 +8,11 @@ export const GlobalStyle = createGlobalStyle`
 
     :focus {
         outline: 0;
-        box-shadow: 0 0 0 2px ${(props) => props.theme['base-card']};
+        box-shadow: 0 0 0 2px ${(props) => props.theme['gray-100']};
     }
 
     body {
         background: ${(props) => props.theme['background']};
-        color: ${(props) => props.theme['base-title']};
         -webkit-font-smoothing: antialiased;
     }
 

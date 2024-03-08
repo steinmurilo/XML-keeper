@@ -3,8 +3,6 @@ package com.steinmurilo.xmlKeeper.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.sql.Timestamp;
-
 @Entity
 @Data
 @Table(name = "nf_fields")
