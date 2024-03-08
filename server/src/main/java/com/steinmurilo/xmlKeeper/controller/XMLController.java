@@ -28,12 +28,12 @@ public class XMLController {
     private XMLFieldsConverter xmlFieldsConverter;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> handleXmlFileUpload(@RequestParam("file") List<MultipartFile> files) {
+    public ResponseEntity<String> handleXmlFileUpload(@RequestParam("file") MultipartFile[] files) {
         try {
             List<String> xmlContents = new ArrayList<>();
 
             for(MultipartFile file : files) {
-                if (!file.getContentType().equals("application/xml")) {
+                if (!file.getContentType().equals("application/xml") && !file.getContentType().equals("text/xml")) {
                     return ResponseEntity.badRequest().body("Invalid file type.");
                 }
 
